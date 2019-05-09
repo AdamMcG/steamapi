@@ -1,16 +1,19 @@
-import RequestService from 'RequestService';
+import RequestService from './RequestService';
 
 const SteamService = {
 
     //Call each separate STEAM service 
     userInformationService: request => {
-        RequestService.getService(request);
-        //Return the parsed data as per requirement. 
+       return RequestService.getService(request);
+        //Return the promise as required. 
     },
     userStatsService: request => {
-        RequestService.postService(request);
+       return RequestService.postService(request);
+        //return promise as required
     },
     webNewsService: request => {
-        RequestService.postService(request);
+        return RequestService.postService(request);
     },
 }
+
+export default SteamService;

@@ -1,4 +1,4 @@
-import axios from 'Axios';
+import axios from 'axios';
 
 const instance = axios.create({
     baseURL: 'https://some-domain.com/api/',
@@ -8,6 +8,7 @@ const instance = axios.create({
 const RequestService = {
 
     getService: request => {
+        instance.get()
         //fill in the data required to make a GET request to the STEAM API
        console.log(instance);
         console.log(request);
