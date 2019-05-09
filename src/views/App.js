@@ -1,8 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
+import SteamService from '../API/SteamService.js';
 import './App.css';
 
 function App() {
+  const testRequest = {adam:'123455'};
+  SteamService.userInformationService(testRequest);
   return (
     <div className="App">
       <header className="App-header">
