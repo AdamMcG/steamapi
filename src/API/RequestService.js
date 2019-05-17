@@ -1,14 +1,23 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://some-domain.com/api/',
     timeout: 1000,
-    headers: {'X-Custom-Header': 'foobar'}});
+    headers: {'X-Custom-Header': 'foobar',
+              'Access-Control-Allow-Origin': '*'
+             }});
 
 const RequestService = {
 
     getService: request => {
-        instance.get()
+        axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/', {
+            params: {
+                appid: 440,
+                maxlength: 300,
+                format:'json'                
+            }
+        }).then(something => {
+            console.log('suckAdick' + something);
+        });
         //fill in the data required to make a GET request to the STEAM API
        console.log(instance);
         console.log(request);
