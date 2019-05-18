@@ -9,14 +9,14 @@ const instance = axios.create({
 const RequestService = {
 
     getService: request => {
-        axios.get('http://localhost:8080/ISteamNews/GetNewsForApp/v0002/', {
+        axios.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/', {
             params: {
                 appid: 440,
                 maxlength: 300,
                 format:'json'                
             }
         }).then(something => {
-            console.log(JSON.stringify(something));
+            console.log('suckAdick' + something);
         });
         //fill in the data required to make a GET request to the STEAM API
        console.log(instance);
