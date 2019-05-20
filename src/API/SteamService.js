@@ -12,8 +12,15 @@ const SteamService = {
         //return promise as required
     },
     webNewsService: request => {
-        return RequestService.postService(request);
+        const url = `${request.url}/ISteamNews/GetNewsForApp/v0002/`;
+        request.url = url;
+        return RequestService.getService(request);
     },
+    supportedAPIService: request => {
+        const url = `${request.url}/ISteamWebAPIUtil/GetSupportedAPIList/v0001/`;
+        request.url = url;
+        return RequestService.getService(request);
+    }
 }
 
 export default SteamService;
