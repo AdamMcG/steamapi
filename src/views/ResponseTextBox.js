@@ -22,10 +22,25 @@ class ResponseTextBox extends React.Component {
             }
         };
         SteamService.supportedAPIService(testRequest).then(something => {
-            const loggins = JSON.stringify(something);
+            console.log(something);
+            const loggins = something.data.apilist;
+            console.log(loggins);
+            const mappedDataSet = loggins.interfaces.map(apiInterface => {
+                return apiInterface.methods.map(method => {
+                    return (<div style={{border: 'solid',
+                                         marginBottom:'3px',
+                                         marginLeft: '50px', 
+                                         display:'inline-block'}} key={method.name}>
+                            <h3>{method.name}</h3>
+                            <h4>{method.version}</h4>
+                            <p>{method.httpmethod}</p>
+                        </div>
+                        ); 
+                });
+            });
             this.setState({
                 isLoaded: true,
-                response: loggins
+                response: mappedDataSet
             });
         }, (error) => {
             this.setState({
@@ -43,7 +58,7 @@ class ResponseTextBox extends React.Component {
             return (
                 <div>
                     <p> Testing this </p>
-                    <p> {response} </p>
+                        {response}
                 </div>
             )
         }
