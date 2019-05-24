@@ -8,7 +8,8 @@ class ResponseTextBox extends React.Component {
         //set up here
         this.state = {
             isLoaded: false,
-            response: ''
+            response: '', 
+            error: ''
         }
 
     }
@@ -22,45 +23,47 @@ class ResponseTextBox extends React.Component {
             }
         };
         SteamService.supportedAPIService(testRequest).then(something => {
-            console.log(something);
             const loggins = something.data.apilist;
-            console.log(loggins);
             const mappedDataSet = loggins.interfaces.map(apiInterface => {
                 return apiInterface.methods.map(method => {
-                    return (<div style={{border: 'solid',
-                                         marginBottom:'3px',
-                                         marginLeft: '50px', 
-                                         display:'inline-block'}} key={method.name}>
-                            <h3>{method.name}</h3>
-                            <h4>{method.version}</h4>
-                            <p>{method.httpmethod}</p>
+                        const params = JSON.stringify(method.parameters);
+                        return (<div style={{border: 'solid'}} key={method.name}>
+                            <h3>Name: {method.name}</h3>
+                            <h4>Version: {method.version}</h4>
+                            <p>Http method: {method.httpmethod}</p>
+                            <p>Parameters: {params}</p>
                         </div>
-                        ); 
+                        );
                 });
             });
             this.setState({
                 isLoaded: true,
-                response: mappedDataSet
+                response: mappedDataSet,
+                error:null
             });
         }, (error) => {
             this.setState({
                 isLoaded: true,
-                response:error
-            })    
+                response: null,
+                error:error
+            })
         });
     }
+
     render() {
-        const { isLoaded, response } = this.state;
+        const { isLoaded, response, error } = this.state;
         if (!isLoaded) {
             return <p> loading </p>
         }
-        else {
+        else if (response) {
             return (
-                <div>
-                    <p> Testing this </p>
-                        {response}
+                <div style={{width:'50%', background:'aqua'}}>
+                    {response}
                 </div>
             )
+        }
+        else if(error) {
+           return <p>{{error}}</p>
         }
     }
 }
