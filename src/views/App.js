@@ -11,7 +11,7 @@ function App() {
           Steam API
     </p>
       </header>
-      <body>
+      <body>        
         <ServiceContent />
       </body>
     </div>
