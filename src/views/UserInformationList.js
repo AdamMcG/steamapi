@@ -1,5 +1,9 @@
 import React from 'react';
 import SteamService from '../API/SteamService.js';
+import { List, ListItem} from '@material-ui/core';
+import UserInformationContentItem from './UserInformationContentItem.js';
+import PropTypes from 'prop-types';
+
 
 
 class UserInformationList extends React.Component {
@@ -17,17 +21,21 @@ class UserInformationList extends React.Component {
             url: 'http://localhost:8080',
             parameters: {
                 key: '09544F1DB351C84C62AA08EE17545216',
-                steamids: '76561197960435530',
+                steamids: this.props.steam,
                 format: 'json'
             }
         };
 
         SteamService.userInformationService(testRequest).then(something => {
-            const loggins = something;
-            console.log(JSON.stringify(loggins));
+            const players = something.data.response.players;
+            const responseRender = players.map(player => {
+               return (<ListItem key={player.personaname}>
+                    <UserInformationContentItem person={player}/>
+                </ListItem>)
+            });
             this.setState({
                 isLoaded: true,
-                response: JSON.stringify(something)
+                response: responseRender
             });
         }, (error) => {
             this.setState({
@@ -38,13 +46,21 @@ class UserInformationList extends React.Component {
     }
 
     render () {
-        const {isLoaded, response} = this.state 
+        const {isLoaded, response} = this.state;
+        
         if (!isLoaded) {
             return <h1>loading</h1>
         } else {
-        return <p>{response}</p>
+        return (<div>
+       
+        <List dense="true">{response}</List>
+        </div>);
         }
     }
 }
+
+UserInformationList.propTypes = {
+    steam: PropTypes.string
+};
 
 export default UserInformationList;

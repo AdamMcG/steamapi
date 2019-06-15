@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ServiceContent() {
+function ServiceContent(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     function handleChange(event, newValue) {
@@ -56,7 +56,7 @@ function ServiceContent() {
         {value === 1 &&
             <TabContainer>
                 Item Two
-                <UserInformationList />
+                <UserInformationList steam={props.id} />
             </TabContainer>
         }
         {
@@ -73,5 +73,8 @@ function ServiceContent() {
     </div>);
 }
 
+ServiceContent.propTypes = {
+    id: PropTypes.string
+}
 
 export default ServiceContent;

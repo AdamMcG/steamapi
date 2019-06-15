@@ -23,6 +23,11 @@ const SteamService = {
         const url = `${request.url}/ISteamWebAPIUtil/GetSupportedAPIList/v0001/`;
         request.url = url;
         return RequestService.getService(request);
+    },
+    playerInformationService: request => {
+        const url = `${request.url}/IPlayerService/${request.endpoint}/`
+        request.url = url;
+        return RequestService.postService(request); 
     }
 }
 
