@@ -1,8 +1,12 @@
 import React from 'react';
 import SteamService from '../API/SteamService.js';
 import MethodResponseContentItem from './MethodResponseContentItem.js';
+import List from '@material-ui/core/List';
+import { makeStyles } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
 
-class ResponseTextBox extends React.Component {
+
+class APIMethodList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,14 +26,14 @@ class ResponseTextBox extends React.Component {
                 format: 'json'
             }
         };
+
         SteamService.supportedAPIService(testRequest).then(something => {
             const loggins = something.data.apilist;
             const mappedDataSet = loggins.interfaces.map(apiInterface => {
                 return apiInterface.methods.map(method => {
-                        return (<div style={{border: 'solid'}} key={method.name}>
+                        return (<ListItem divider="true" key={method.name}>
                                 <MethodResponseContentItem content={method}/>
-                        </div>
-                        ); 
+                        </ListItem>); 
                 });
             });
             this.setState({
@@ -43,19 +47,28 @@ class ResponseTextBox extends React.Component {
             })    
         });
     }
+
+      
     render() {
         const { isLoaded, response } = this.state;
+        const classes =  makeStyles(theme => ({
+            root: {
+              width: '100%',
+              maxWidth: 360,
+              backgroundColor: theme.palette.background.default,
+            },
+          }));
         if (!isLoaded) {
             return <p> loading </p>
         }
         else {
             return (
-                <div>
+                <List dense="true" className={classes.root}>
                     {response}
-                </div>
+                </List>
             )
         }
     }
 }
 
-export default ResponseTextBox;
+export default APIMethodList;

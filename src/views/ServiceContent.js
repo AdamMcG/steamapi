@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ResponseTextBox from './ResponseTextBox';
+import APIMethodList from './APIMethodList';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import UserInformationList from './UserInformationList';
+import { Container } from '@material-ui/core';
 
 function TabContainer(props) {
     return (
@@ -19,7 +21,7 @@ TabContainer.propTypes = {
     children: PropTypes.node.isRequired
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
@@ -27,50 +29,52 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function ServiceContent() {
+function ServiceContent(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     function handleChange(event, newValue) {
         setValue(newValue);
     }
     return (<div className={classes.root}>
-        <AppBar position="static" color="default">
+        <paper square>
+            <AppBar color="default" position="sticky">
             <Tabs value={value} onChange={handleChange}
-                centered
-                indicatorColor="primary"
-                textColor="secondary"
-            >
+                centered>
                 <Tab label="API End Points"></Tab>
                 <Tab label="User Information"></Tab>
                 <Tab label="User Stat Information"></Tab>
                 <Tab label="Web News"></Tab>
             </Tabs>
         </AppBar>
+        </paper>
+        <Container>
         {value === 0 &&
             <TabContainer>Item One
-               <ResponseTextBox />
+               <APIMethodList />
             </TabContainer>
         }
         {value === 1 &&
             <TabContainer>
                 Item Two
-                <ResponseTextBox />
+                <UserInformationList steam={props.id} />
             </TabContainer>
         }
         {
             value === 2 && <TabContainer>
                 Item Three
-                <ResponseTextBox />
             </TabContainer>
         }
         {
             value === 3 && <TabContainer>
                 Item four
-                <ResponseTextBox />
             </TabContainer>
         }
+        </Container>
     </div>);
 }
 
+ServiceContent.propTypes = {
+    id: PropTypes.string
+}
 
 export default ServiceContent;
