@@ -41,9 +41,9 @@ function ServiceContent(props) {
             <Tabs value={value} onChange={handleChange}
                 centered>
                 <Tab label="API End Points"></Tab>
-                <Tab label="User Information"></Tab>
-                <Tab label="User Stat Information"></Tab>
-                <Tab label="Web News"></Tab>
+                <Tab label="User Information" disabled={props.saved}></Tab>
+                <Tab label="User Stat Information" disabled={props.saved}></Tab>
+                <Tab label="Web News" disabled={props.saved}></Tab>
             </Tabs>
         </AppBar>
         </paper>
@@ -74,7 +74,8 @@ function ServiceContent(props) {
 }
 
 ServiceContent.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
+    saved:PropTypes.bool
 }
 
 export default ServiceContent;
