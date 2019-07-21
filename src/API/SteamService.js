@@ -14,7 +14,7 @@ const SteamService = {
         return RequestService.postService(request);
         //return promise as required
     },
-    webNewsService: request => {
+    webNewsInformationService: request => {
         const url = `${request.url}/ISteamNews/GetNewsForApp/v0002/`;
         request.url = url;
         return RequestService.getService(request);
