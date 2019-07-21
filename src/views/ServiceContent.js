@@ -8,6 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import UserInformationList from './UserInformationList';
 import { Container } from '@material-ui/core';
+import WebNewsInformationList from './WebNewsInformationList';
 
 function TabContainer(props) {
     return (
@@ -66,7 +67,7 @@ function ServiceContent(props) {
         }
         {
             value === 3 && <TabContainer>
-                Item four
+                <WebNewsInformationList/>
             </TabContainer>
         }
         </Container>

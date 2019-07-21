@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import ServiceContent from './ServiceContent';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/styles';
@@ -36,7 +35,8 @@ function App() {
 
   const clearItem = () => {
     localStorage.removeItem('steamId');
-    setValues({ ...values, 'steamid': '' });
+    setValues({ ...values, 'steamid': '', 'opened': true});
+    
   };
 
   const setOpenDialogModel = () => {
