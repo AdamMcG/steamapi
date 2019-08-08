@@ -4,6 +4,7 @@ import MethodResponseContentItem from './MethodResponseContentItem.js';
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
+import { Typography } from '@material-ui/core';
 
 
 class APIMethodList extends React.Component {
@@ -63,9 +64,15 @@ class APIMethodList extends React.Component {
         }
         else {
             return (
+                <div>
+                <Typography align="center" variant="h2" color="textPrimary">API List</Typography>
+                <Typography variant="h5" align="center" color="textSecondary">
+                   Provides a list of API endpoints we can use within the Steam API - many of these may not be implemented on this website but instead available to you to implement. 
+                </Typography>
                 <List dense="true" className={classes.root}>
                     {response}
                 </List>
+                </div>
             )
         }
     }

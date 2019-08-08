@@ -7,11 +7,16 @@ const SteamService = {
         return RequestService.getService(request);
         //Return the promise as required. 
     },
+    userFriendInformationService: request => {
+        const url = `${request.url}/ISteamUser/GetFriendList/v0001/`;
+        request.url = url;
+        return RequestService.getService(request);
+    },
     //TODO: Modify service to handle specific endpoints separately - perhaps append the function call 
-    userStatsService: request => {
+    userStatsServiceForGames: request => {
         const url = `${request.url}/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/`;
         request.url = url;
-        return RequestService.postService(request);
+        return RequestService.getService(request);
         //return promise as required
     },
     webNewsInformationService: request => {

@@ -1,22 +1,32 @@
 import React from 'react';
 import ServiceContent from './ServiceContent';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/styles';
-import { Button } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { createMuiTheme } from '@material-ui/core/styles';
+import {Dialog, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton';
+import SaveIcon from '@material-ui/icons/Save';
+import ClearIcon from '@material-ui/icons/Clear';
+import { Grid, TextField, Typography, Toolbar, AppBar } from '@material-ui/core';
+import {green, yellow } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: yellow,
+    secondary: yellow,
+    error: green,
+    textColor:yellow,
+    color:yellow
+  },
+});
 
 
 function App() {
-  const [values, setValues] = React.useState ({
-    steamid: localStorage.getItem('steamId'),
-    opened: true,
-    openDialog: false
-  });  
 
-  const [openDialog, setDialog] = React.useState(false);
+  const [values, setValues] = React.useState({
+    steamid: localStorage.getItem('steamId'),
+    opened: localStorage.getItem('steamId') ? false : true,
+    openDialog: false
+  });
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -28,6 +38,7 @@ function App() {
     }
     if (values.steamid) {
       setValues({ ...values, 'opened': false });
+      setDialog(true);
     } else {
       setValues({ ...values, 'opened': true });
     }
@@ -35,69 +46,64 @@ function App() {
 
   const clearItem = () => {
     localStorage.removeItem('steamId');
-    setValues({ ...values, 'steamid': '', 'opened': true});
-    
-  };
+    setValues({ ...values, 'steamid': '', 'opened': true });
 
-  const setOpenDialogModel = () => {
-    if (values.steamid) {
-      setDialog(true);
-    }
-  }
+  };
 
   const closeDialog = () => {
     setDialog(false);
   }
 
-  const classes = makeStyles(theme => ({
-    root: {
-      backgroundColor: theme.palette.background.default,
-      width: 500
-    },
-  }));
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Steam API
-        </p>
-      </header>
-
+    <div>
       <body>
-        <form noValidate autoComplete="off">
-          <TextField id="steamid"
-                     label="Steam ID"
-                     className={classes.root}
-                     value={values.steamid}
-                     onChange={handleChange('steamid')}
-                     margin="normal">
-          </TextField>
-        </form>
-        <div>
-          <Button variant="contained"
-                  color="primary"
-                  size="medium"
-                  onClick={() => { saveItem(); setOpenDialogModel(); }}> SAVE
-          </Button>
-
-          <Button variant="contained"
-                  color="secondary"
-                  size="medium"
-                  onClick={() => { clearItem() }}> CLEAR
-          </Button>
-        </div>
-
+        <AppBar position="static">
+          <Toolbar>
+            <Grid container>
+              <Grid item xs={7}>
+                <Typography variant="h3" color="secondary">
+                  Steam API
+          </Typography>
+              </Grid>
+              <Grid item xs={5}>
+                <ThemeProvider theme={theme}>
+                  <TextField id="steamid"
+                    label="Steam ID"
+                    fontSize="large"
+                    value={values.steamid}
+                    onChange={handleChange('steamid')}
+                    InputLabelProps={{
+                      style: {
+                          color: "yellow"
+                      }
+                  }}
+                    InputProps={{
+                      style: {
+                          color: "yellow"
+                      }
+                  }}>
+                  </TextField>
+                </ThemeProvider>
+                <IconButton  color="secondary" onClick={() => { saveItem(); }}>
+                  <SaveIcon fontSize="large" />
+                </IconButton>
+                <IconButton color="secondary" onClick={() => { clearItem() }}>
+                  <ClearIcon fontSize="large"/>
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
         <Dialog open={openDialog}
-                onClose={(() => closeDialog())}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description">
-                <DialogTitle id="alert-dialog-title">SteamAPI</DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    You have saved your steamId and are ready to work.
+          onClose={(() => closeDialog())}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+          <DialogTitle id="alert-dialog-title">SteamAPI</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              You have saved your steamId and are ready to work.
                   </DialogContentText>
-                </DialogContent>
+          </DialogContent>
         </Dialog>
 
         <ServiceContent id={values.steamid} saved={values.opened} />

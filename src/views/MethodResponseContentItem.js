@@ -8,14 +8,23 @@ class MethodResponseContentItem extends React.Component {
     }
 
     componentDidMount () {
+
     }
 
     render () {
+        // const test = this.props.content.parameters.map(parameter => {
+        //     return <div key="parameter.name">
+        //         <ListItemText primary={'Name'} secondary={parameter.name}/>
+        //         <ListItemText primary={'Description'} secondary={parameter.description}/>
+        //         <ListItemText primary={'Type'} secondary={parameter.type}/>
+        //         <ListItemText primary={'Optional'} secondary={parameter.optional}/>
+        //     </div>;
+        // });
         return  <div>
         <ListItemText inset="true" primary={`Name:`} secondary={this.props.content.name}></ListItemText>
         <ListItemText inset="true" primary={`Version:`} secondary={this.props.content.version}></ListItemText>
         <ListItemText inset="true"primary={ `Http method:`} secondary={this.props.content.httpmethod}></ListItemText>
-        // add list item for parameters. 
+        {/* {test} */}
     </div>;
     }
 }

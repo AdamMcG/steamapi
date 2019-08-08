@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import UserInformationList from './UserInformationList';
 import { Container } from '@material-ui/core';
 import WebNewsInformationList from './WebNewsInformationList';
+import UserStatInformationList from './UserFriendInformationList';
+import HomePage from './HomePage';
 
 function TabContainer(props) {
     return (
@@ -41,19 +43,20 @@ function ServiceContent(props) {
             <AppBar color="default" position="sticky">
             <Tabs value={value} onChange={handleChange}
                 centered>
-                <Tab label="API End Points"></Tab>
+                <Tab label="Home Tab"></Tab>    
                 <Tab label="User Information" disabled={props.saved}></Tab>
-                <Tab label="User Stat Information" disabled={props.saved}></Tab>
+                <Tab label="User Friend Information" disabled={props.saved}></Tab>
                 <Tab label="Web News" disabled={props.saved}></Tab>
+                <Tab label="API End Points"></Tab>
             </Tabs>
         </AppBar>
         </paper>
         <Container>
         {value === 0 &&
-            <TabContainer>Item One
-               <APIMethodList />
+            <TabContainer>
+               <HomePage/>
             </TabContainer>
-        }
+        }    
         {value === 1 &&
             <TabContainer>
                 Item Two
@@ -63,11 +66,17 @@ function ServiceContent(props) {
         {
             value === 2 && <TabContainer>
                 Item Three
+                <UserStatInformationList steam={props.id}/>
             </TabContainer>
         }
         {
             value === 3 && <TabContainer>
                 <WebNewsInformationList/>
+            </TabContainer>
+        }
+        {value === 4 &&
+            <TabContainer>
+               <APIMethodList />
             </TabContainer>
         }
         </Container>
