@@ -1,12 +1,12 @@
 import React from 'react';
 import ServiceContent from './ServiceContent';
 import { createMuiTheme } from '@material-ui/core/styles';
-import {Dialog, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core'
+import { Dialog, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Grid, TextField, Typography, Toolbar, AppBar } from '@material-ui/core';
-import {green, yellow } from '@material-ui/core/colors';
+import { green, yellow } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/styles';
 
 const theme = createMuiTheme({
@@ -14,8 +14,8 @@ const theme = createMuiTheme({
     primary: yellow,
     secondary: yellow,
     error: green,
-    textColor:yellow,
-    color:yellow
+    textColor: yellow,
+    color: yellow
   },
 });
 
@@ -38,9 +38,8 @@ function App() {
     }
     if (values.steamid) {
       setValues({ ...values, 'opened': false });
-      setDialog(true);
     } else {
-      setValues({ ...values, 'opened': true });
+      setValues({ ...values, 'opened': true, 'openDialog': true });
     }
   };
 
@@ -51,7 +50,8 @@ function App() {
   };
 
   const closeDialog = () => {
-    setDialog(false);
+    setValues({ ...values, 'openDialog': true });
+
   }
 
   return (
@@ -74,27 +74,28 @@ function App() {
                     onChange={handleChange('steamid')}
                     InputLabelProps={{
                       style: {
-                          color: "yellow"
+                        color: "yellow"
                       }
-                  }}
+                    }}
                     InputProps={{
                       style: {
-                          color: "yellow"
+                        color: "yellow"
                       }
-                  }}>
+                    }}>
                   </TextField>
                 </ThemeProvider>
-                <IconButton  color="secondary" onClick={() => { saveItem(); }}>
+                <IconButton color="secondary" onClick={() => { saveItem(); }}>
                   <SaveIcon fontSize="large" />
                 </IconButton>
                 <IconButton color="secondary" onClick={() => { clearItem() }}>
-                  <ClearIcon fontSize="large"/>
+                  <ClearIcon fontSize="large" />
                 </IconButton>
               </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
-        <Dialog open={openDialog}
+        
+        <Dialog open={values.openDialog}
           onClose={(() => closeDialog())}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description">

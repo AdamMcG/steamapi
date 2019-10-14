@@ -33,6 +33,11 @@ const SteamService = {
         const url = `${request.url}/IPlayerService/${request.endpoint}/`
         request.url = url;
         return RequestService.postService(request); 
+    },
+    playerOwnedGameService: request => {
+        const url = `${request.url}/IPlayerService/GetOwnedGames/v0001/`;
+        request.url = url;
+        return RequestService.getService(request);
     }
 }
 

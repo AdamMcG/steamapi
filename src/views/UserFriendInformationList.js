@@ -27,9 +27,9 @@ class UserFriendInformationList extends React.Component {
         };
 
         SteamService.userFriendInformationService(testRequest).then(response => {
-           const friends = response.data.friendslist.friends;
-           const steamIds = friends.map(friend => friend.steamid);
-           
+            const friends = response.data.friendslist.friends;
+            const steamIds = friends.map(friend => friend.steamid);
+
             const userRequest = {
                 url: 'http://localhost:8080',
                 parameters: {
@@ -38,25 +38,25 @@ class UserFriendInformationList extends React.Component {
                     format: 'json'
                 }
             };
-           SteamService.userInformationService(userRequest).then(something => {
-            const players = something.data.response.players;
-            const responseRender = players.map(player => {
-               return (<ListItem color="primary"
+            SteamService.userInformationService(userRequest).then(something => {
+                const players = something.data.response.players;
+                const responseRender = players.map(player => {
+                    return (<ListItem color="primary"
                         divider="true"
                         key={player.personaname}>
-                    <UserInformationContentItem person={player}/>
-                </ListItem>)
+                        <UserInformationContentItem person={player} />
+                    </ListItem>)
+                });
+                this.setState({
+                    isLoaded: true,
+                    response: responseRender
+                });
+            }, (error) => {
+                this.setState({
+                    isLoaded: true,
+                    response: error
+                })
             });
-            this.setState({
-                isLoaded: true,
-                response: responseRender
-            });
-        }, (error) => {
-            this.setState({
-                isLoaded: true,
-                response:error
-            })    
-        });
         });
     }
 
